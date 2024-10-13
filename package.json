@@ -1,6 +1,6 @@
 {
   "name": "malaria-inference-frontend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "homepage": "https://avias8.github.io/malaria-inference-frontend",
   "dependencies": {
@@ -16,14 +16,13 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build -b main",
     "generate-images": "node generateImageList.js",
-    "start": "npm run generate-images && react-scripts start",
-    "build": "npm run generate-images && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-},
-
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
