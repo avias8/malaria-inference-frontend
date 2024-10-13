@@ -19,7 +19,7 @@
     "deploy": "gh-pages -d build",
     "generate-images": "node generateImageList.js",
     "start": "npm run generate-images && react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run generate-images && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
 },

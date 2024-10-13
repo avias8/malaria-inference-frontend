@@ -3,49 +3,39 @@ import React, { useState, useEffect } from 'react';
 const FileUpload = ({ onImageSubmit }) => {
     const [imagePath, setImagePath] = useState(null);
     const [imageName, setImageName] = useState(null);  // To store the image name
-    const [imageList, setImageList] = useState({ parasitized: [], uninfected: [] });
+    const [images, setImages] = useState({ parasitized: [], uninfected: [] }); // To store images from JSON
 
+    // Fetch the image list from the JSON file
     useEffect(() => {
-        // Fetch the image list JSON file
-        const fetchImageList = async () => {
-            try {
-                const response = await fetch(`${process.env.PUBLIC_URL}/imageList.json`);
-                const data = await response.json();
-                setImageList(data);
-            } catch (error) {
-                console.error('Error fetching the image list:', error);
-            }
-        };
-
-        fetchImageList();
+        fetch(`${process.env.PUBLIC_URL}/image_list.json`)
+            .then(response => response.json())
+            .then(data => {
+                setImages(data);
+            })
+            .catch(error => console.error('Error fetching image list:', error));
     }, []);
 
     // Function to randomly select an image from a category
     const randomImage = () => {
-        const categories = ['parasitized', 'uninfected'];
+        const categories = Object.keys(images); // Get categories from the fetched data
         const category = categories[Math.floor(Math.random() * categories.length)];
-        const images = imageList[category];
 
-        if (images.length > 0) {
-            const randomImage = images[Math.floor(Math.random() * images.length)];
-            const imagePath = `/${randomImage}`; // Path directly from the public folder
-            const imageName = randomImage.split('/').pop();  // Extract the image name from the path
+        const randomImage = images[category][Math.floor(Math.random() * images[category].length)];
+        const imagePath = `${process.env.PUBLIC_URL}/test/${category}/${randomImage}`; // Use PUBLIC_URL to access the public folder
+        const imageName = randomImage;  // Image file name
 
-            setImagePath(imagePath);
-            setImageName(imageName);
+        setImagePath(imagePath);
+        setImageName(imageName);
 
-            // Fetch the image as a blob and prepare it as formData
-            fetch(imagePath)
-                .then(response => response.blob())
-                .then(blob => {
-                    const formData = new FormData();
-                    formData.append('file', blob, imageName);
-                    onImageSubmit(formData, imagePath);
-                })
-                .catch(error => console.error('Error fetching the image:', error));
-        } else {
-            console.error("[DEBUG] No images found in the directory for category:", category);
-        }
+        // Fetch the image as a blob and prepare it as formData
+        fetch(imagePath)
+            .then(response => response.blob())
+            .then(blob => {
+                const formData = new FormData();
+                formData.append('file', blob, imageName);
+                onImageSubmit(formData, imagePath);
+            })
+            .catch(error => console.error('Error fetching the image:', error));
     };
 
     return (
