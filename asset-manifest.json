@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/malaria-inference-frontend/static/css/main.b184ea7b.css",
-    "main.js": "/malaria-inference-frontend/static/js/main.c1b51382.js",
+    "main.css": "/malaria-inference-frontend/static/css/main.60feb8dc.css",
+    "main.js": "/malaria-inference-frontend/static/js/main.0c2acb9a.js",
     "static/js/453.4c20a088.chunk.js": "/malaria-inference-frontend/static/js/453.4c20a088.chunk.js",
     "index.html": "/malaria-inference-frontend/index.html",
-    "main.b184ea7b.css.map": "/malaria-inference-frontend/static/css/main.b184ea7b.css.map",
-    "main.c1b51382.js.map": "/malaria-inference-frontend/static/js/main.c1b51382.js.map",
+    "main.60feb8dc.css.map": "/malaria-inference-frontend/static/css/main.60feb8dc.css.map",
+    "main.0c2acb9a.js.map": "/malaria-inference-frontend/static/js/main.0c2acb9a.js.map",
     "453.4c20a088.chunk.js.map": "/malaria-inference-frontend/static/js/453.4c20a088.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b184ea7b.css",
-    "static/js/main.c1b51382.js"
+    "static/css/main.60feb8dc.css",
+    "static/js/main.0c2acb9a.js"
   ]
 }
