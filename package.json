@@ -12,11 +12,12 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.14.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -b main",
+    "deploy": "gh-pages -d build -b main -r git@github.com:avias8/malaria-inference-frontend.git",
     "generate-images": "node generateImageList.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -42,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "gh-pages": "^6.2.0"
   }
 }

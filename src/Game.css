@@ -1,0 +1,254 @@
+/* Game.css */
+
+.game {
+    text-align: center;
+    padding: 1.5rem;
+    /* Reduced padding */
+}
+
+.game h1 {
+    font-size: 2rem;
+    /* Reduced font size */
+    margin-bottom: 1.5rem;
+    /* Reduced margin */
+}
+
+button:focus {
+    outline: 2px solid #1976d2;
+}
+
+
+.guess-buttons {
+    margin: 1rem 0;
+    /* Adjusted margin to provide space around the buttons */
+}
+
+.guess-buttons h3 {
+    font-size: 1.4rem;
+    /* Increased heading size slightly */
+    margin-bottom: 0.75rem;
+}
+
+.guess-buttons button {
+    background-color: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    /* Increased padding for larger buttons */
+    margin: 0 0.5rem;
+    /* Increased margin between buttons */
+    font-size: 1rem;
+    /* Increased font size for better readability */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s;
+    /* Added transform for hover effect */
+}
+
+.guess-buttons button:hover {
+    background-color: #1565c0;
+    transform: scale(1.05);
+    /* Slightly enlarge button on hover */
+}
+
+.guess-buttons button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+}
+
+.guess-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.loading {
+    font-size: 1rem;
+    /* Reduced font size */
+    margin: 0.5rem 0;
+    /* Reduced margin */
+}
+
+.results-history {
+    margin-top: 1.5rem;
+    /* Reduced margin */
+}
+
+.results-history h3 {
+    font-size: 1.3rem;
+    /* Slightly smaller heading */
+    margin-bottom: 0.75rem;
+    /* Reduced margin */
+}
+
+.results-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.result-entry {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    /* Reduced margin */
+    font-size: 1rem;
+    /* Reduced font size */
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.25rem;
+    /* Reduced padding */
+    width: 100%;
+    max-width: 600px;
+}
+
+.result-entry .emoji {
+    font-size: 1.5rem;
+    /* Reduced emoji size */
+    margin: 0 0.25rem;
+    /* Reduced margin */
+}
+
+.result-entry .label {
+    margin: 0 0.25rem;
+    font-weight: bold;
+}
+
+.result-entry .guess {
+    margin: 0 0.25rem;
+    color: #555;
+}
+
+.result-entry .vs {
+    margin: 0 0.5rem;
+    font-weight: bold;
+}
+
+.result-entry .confidence {
+    margin-left: auto;
+    font-size: 0.8rem;
+    /* Reduced font size */
+    color: #777;
+    text-align: right;
+    flex-basis: 100%;
+    margin-top: 0.25rem;
+    /* Reduced margin */
+}
+
+.scoreboard {
+    margin-top: 1.5rem;
+    /* Reduced margin */
+}
+
+.scoreboard h3 {
+    font-size: 1.3rem;
+    /* Slightly smaller heading */
+    margin-bottom: 0.75rem;
+    /* Reduced margin */
+}
+
+.scoreboard p {
+    font-size: 1rem;
+    /* Reduced font size */
+    margin: 0.25rem 0;
+    /* Added margin between paragraphs */
+}
+
+/* Shake animation remains unchanged */
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shake {
+    animation: shake 0.5s;
+    display: inline-block;
+}
+
+.error-message {
+    color: red;
+    margin-top: 1rem;
+}
+
+/* API Status Indicator */
+.api-status {
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.api-status.checking {
+    background-color: #ffeb3b;
+    /* Yellow */
+    color: #000;
+}
+
+.api-status.online {
+    background-color: #4caf50;
+    /* Green */
+    color: #fff;
+}
+
+.api-status.offline {
+    background-color: #f44336;
+    /* Red */
+    color: #fff;
+}
+
+/* Status Orb */
+.status-orb {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #cccccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Online Status */
+.status-orb.online {
+    background-color: #4caf50;
+    /* Green */
+    box-shadow: 0 0 15px #4caf50;
+}
+
+/* Offline Status */
+.status-orb.offline {
+    background-color: #f44336;
+    /* Red */
+    box-shadow: 0 0 15px #f44336;
+}
+
+/* Checking Status */
+.status-orb.checking {
+    background-color: #ffeb3b;
+    /* Yellow */
+    box-shadow: 0 0 15px #ffeb3b;
+}
+
+/* Hover Effect */
+.status-orb:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s;
+}

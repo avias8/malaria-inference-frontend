@@ -1,123 +1,229 @@
-import React, { useState } from 'react';
-import FileUpload from './FileUpload';  // Assuming FileUpload is in the same folder
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { ClipLoader } from 'react-spinners';
+import FileUpload from './FileUpload';
+import './Game.css';
 
 const Game = () => {
-    const [userGuess, setUserGuess] = useState(null);  // To track the user's guess
-    const [result, setResult] = useState(null);        // To track the model's prediction
-    const [loading, setLoading] = useState(false);     // To track loading state
-    const [imageData, setImageData] = useState(null);  // To store formData with the selected image
-    const [currentImagePath, setCurrentImagePath] = useState(null);  // To store the path of the current image
-    const [userScore, setUserScore] = useState(0);     // To track user's correct guesses
-    const [modelScore, setModelScore] = useState(0);   // To track model's correct predictions
-    const [totalGuesses, setTotalGuesses] = useState(0); // Track total guesses
+  // State variables
+  const [loading, setLoading] = useState(false);
+  const [imageData, setImageData] = useState(null);
+  const [currentImagePath, setCurrentImagePath] = useState(null);
+  const [userScore, setUserScore] = useState(0);
+  const [modelScore, setModelScore] = useState(0);
+  const [totalGuesses, setTotalGuesses] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [apiStatus, setApiStatus] = useState('checking'); // 'online', 'offline', or 'checking'
 
-    // Function to select a new image after every guess
-    const selectNewImage = () => {
-        setImageData(null);  // Clear current image
-        setResult(null);  // Clear the result
-        document.getElementById('select-image-button').click();  // Trigger new random image selection
-    };
+  // Combined game results
+  const [gameResults, setGameResults] = useState([]);
 
-    // Function to handle image submission and track the current image path
-    const handleImageSubmit = (formData, imagePath) => {
-        setImageData(formData);  // Store the form data for image submission
-        setCurrentImagePath(imagePath);  // Store the path of the current image
-    };
+  // Ref to access methods in FileUpload component
+  const fileUploadRef = useRef();
 
-    // Wrapper function to handle the game logic
-    const handleGameSubmit = async (guess) => {
-        if (!imageData) {
-            alert('No image selected!');
-            return;
-        }
+  // Memoize handleImageSubmit to prevent re-creation on every render
+  const handleImageSubmit = useCallback((formData, imagePath) => {
+    setImageData(formData);
+    setCurrentImagePath(imagePath);
+  }, []);
 
-        setLoading(true);
-        setUserGuess(guess);  // Record the user's guess when they make a choice
-        setResult(null);      // Reset previous results
+  // Function to select a new image after every guess
+  const selectNewImage = () => {
+    setImageData(null);
+    if (fileUploadRef.current) {
+      fileUploadRef.current.randomImage();
+    }
+  };
 
-        try {
-            // Send the FormData (image) to the API
-            const apiResponse = await fetch('https://keras-flask-inference-537799078747.us-central1.run.app/predict', {
-                method: 'POST',
-                body: imageData  // Submit the image
-            });
+  // Function to check API status
+  const checkApiStatus = useCallback(async () => {
+    try {
+      const response = await fetch('https://keras-flask-inference-537799078747.us-central1.run.app/predict', {
+        method: 'OPTIONS',
+        mode: 'cors',
+      });
+      if (response.ok || response.status === 204) {
+        setApiStatus('online');
+      } else {
+        setApiStatus('offline');
+      }
+    } catch (error) {
+      console.error('Error checking API status:', error);
+      setApiStatus('offline');
+    }
+  }, []);
+  
 
-            const data = await apiResponse.json();
-            setResult(data);  // Store the model's prediction result
+  // Initially select an image when the component mounts and check API status
+  useEffect(() => {
+    if (fileUploadRef.current) {
+      fileUploadRef.current.randomImage();
+    }
+    // Check API status immediately and then every 30 seconds
+    checkApiStatus();
+    const interval = setInterval(() => {
+      checkApiStatus();
+    }, 30000); // 30 seconds
 
-            // Update the total guesses count
-            setTotalGuesses(prev => prev + 1);
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
+  }, [checkApiStatus]);
 
-            // Get the correct label based on the image path (assumes filenames contain "parasitized" or "uninfected")
-            const correctLabel = currentImagePath.includes('parasitized') ? 'Parasitized' : 'Uninfected';
+  // Handle the game logic when the user makes a guess
+  const handleGameSubmit = async (guess) => {
+    if (!imageData) {
+      alert('No image selected!');
+      return;
+    }
 
-            // Check if the user's guess is correct
-            if (guess === correctLabel) {
-                setUserScore(prev => prev + 1);  // User's correct guess
-            }
+    setLoading(true);
 
-            // Check if the model's prediction is correct
-            if (data.prediction === correctLabel) {
-                setModelScore(prev => prev + 1);  // Model's correct prediction
-            }
+    try {
+      // Send the image to the prediction API
+      const apiResponse = await fetch('https://keras-flask-inference-537799078747.us-central1.run.app/predict', {
+        method: 'POST',
+        body: imageData,
+      });
 
-        } catch (error) {
-            console.error('Error submitting image:', error);
-            setResult({ error: 'Failed to get a response from the server' });
-        } finally {
-            setLoading(false);
-            selectNewImage();  // Automatically select a new image after every guess
-        }
-    };
+      const data = await apiResponse.json();
 
-    return (
-        <div>
-            <h1>Malaria Cell Classification Game</h1>
-            
-            {/* Render the FileUpload component and store image data when an image is selected */}
-            <FileUpload onImageSubmit={handleImageSubmit} />
+      // Update the total guesses count
+      setTotalGuesses((prev) => prev + 1);
 
-            {/* Show buttons only if an image is selected */}
-            {imageData && (
-                <div>
-                    <h3>Make Your Guess</h3>
-                    <button onClick={() => handleGameSubmit('Parasitized')} disabled={loading}>
-                        Infected
-                    </button>
-                    <button onClick={() => handleGameSubmit('Uninfected')} disabled={loading}>
-                        Uninfected
-                    </button>
-                </div>
-            )}
+      // Determine the correct label based on the image path
+      const correctLabel = currentImagePath.includes('parasitized') ? 'Parasitized' : 'Uninfected';
 
-            {/* Show loading message */}
-            {loading && <p>Processing...</p>}
+      // Determine if the user's guess was correct
+      const isUserCorrect = guess === correctLabel;
 
-            {/* Display the user's guess and the model's result once available */}
-            {result && (
-                <div>
-                    <h2>Results</h2>
-                    <p>Your Guess: {userGuess}</p>
-                    {result.error ? (
-                        <p>{result.error}</p>
-                    ) : (
-                        <p>
-                            Model Prediction: {result.prediction} <br />
-                            Confidence: {result.confidence}
-                        </p>
-                    )}
-                </div>
-            )}
+      // Update user score
+      if (isUserCorrect) {
+        setUserScore((prev) => prev + 1);
+      }
 
-            {/* Display the scoreboard */}
-            <div>
-                <h3>Scoreboard</h3>
-                <p>Total Guesses: {totalGuesses}</p>
-                <p>Your Correct Guesses: {userScore}</p>
-                <p>Model's Correct Predictions: {modelScore}</p>
-            </div>
+      // Determine if the model's prediction was correct
+      const isModelCorrect = data.prediction === correctLabel;
+
+      // Update model score
+      if (isModelCorrect) {
+        setModelScore((prev) => prev + 1);
+      }
+
+      // Create a new result entry
+      const newResult = {
+        key: totalGuesses, // Unique key
+        userCorrect: isUserCorrect,
+        modelCorrect: isModelCorrect,
+        correctLabel: correctLabel, // The actual label
+        userGuess: guess,
+        modelPrediction: data.prediction,
+        confidence: data.confidence,
+      };
+
+      // Update the gameResults array
+      setGameResults((prevResults) => [...prevResults, newResult]);
+    } catch (error) {
+      console.error('Error submitting image:', error);
+      setErrorMessage('An error occurred while processing your guess. Please try again.');
+    } finally {
+      setLoading(false);
+      selectNewImage();
+    }
+  };
+
+  return (
+    <div className="game">
+      
+    {/* Status Orb */}
+    <a
+      href="https://console.cloud.google.com/run/detail/us-central1/keras-flask-inference/metrics?project=massive-petal-438523-s7"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`status-orb ${apiStatus}`}
+      title="API Status"
+    ></a>
+
+      <h1>Malaria Cell Classification Game</h1>
+
+      {/* Render the FileUpload component */}
+      <FileUpload ref={fileUploadRef} onImageSubmit={handleImageSubmit} />
+
+      {/* Show buttons only if an image is selected */}
+      {imageData && (
+        <div className="guess-buttons">
+          <h3>Make Your Guess</h3>
+          <button
+            onClick={() => handleGameSubmit('Parasitized')}
+            disabled={loading || apiStatus !== 'online'}
+            tabIndex={0}
+            aria-label="Guess Infected"
+          >
+            Infected
+          </button>
+
+          <button
+            onClick={() => handleGameSubmit('Uninfected')}
+            disabled={loading || apiStatus !== 'online'}
+            tabIndex={1}
+            aria-label="Guess Uninfected"
+          >
+            Uninfected
+          </button>
         </div>
-    );
+      )}
+
+      {/* Show loading spinner */}
+      {loading && (
+        <div className="loading">
+          <ClipLoader color="#1976d2" loading={loading} size={50} />
+        </div>
+      )}
+
+      {/* Display the combined results history */}
+      <div className="results-history">
+        <h3>Guess History</h3>
+        <div className="results-container">
+          {gameResults.slice(-5).reverse().map((entry) => (
+            <div key={entry.key} className="result-entry">
+              {/* User's result */}
+              <span
+                className={`emoji ${!entry.userCorrect ? 'shake' : ''}`}
+                aria-label={entry.userCorrect ? 'Correct' : 'Incorrect'}
+              >
+                {entry.userCorrect ? '✅' : '😲'}
+              </span>
+              <span className="label">You</span>
+              <span className="guess">({entry.userGuess})</span>
+
+              <span className="vs">vs</span>
+
+              {/* Model's result */}
+              <span
+                className={`emoji ${!entry.modelCorrect ? 'shake' : ''}`}
+                aria-label={entry.modelCorrect ? 'Correct' : 'Incorrect'}
+              >
+                {entry.modelCorrect ? '✅' : '😲'}
+              </span>
+              <span className="label">Model</span>
+              <span className="guess">({entry.modelPrediction})</span>
+
+              <span className="confidence">Confidence: {entry.confidence}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Display the scoreboard */}
+      <div className="scoreboard">
+        <h3>Scoreboard</h3>
+        <p>Total Guesses: {totalGuesses}</p>
+        <p>Your Correct Guesses: {userScore}</p>
+        <p>Model's Correct Predictions: {modelScore}</p>
+      </div>
+
+      {/* Display error message */}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+    </div>
+  );
 };
 
 export default Game;
