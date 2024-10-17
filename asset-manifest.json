@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/malaria-inference-frontend/static/css/main.4fb3282c.css",
+    "main.css": "/malaria-inference-frontend/static/css/main.b184ea7b.css",
     "main.js": "/malaria-inference-frontend/static/js/main.c1b51382.js",
     "static/js/453.4c20a088.chunk.js": "/malaria-inference-frontend/static/js/453.4c20a088.chunk.js",
     "index.html": "/malaria-inference-frontend/index.html",
-    "main.4fb3282c.css.map": "/malaria-inference-frontend/static/css/main.4fb3282c.css.map",
+    "main.b184ea7b.css.map": "/malaria-inference-frontend/static/css/main.b184ea7b.css.map",
     "main.c1b51382.js.map": "/malaria-inference-frontend/static/js/main.c1b51382.js.map",
     "453.4c20a088.chunk.js.map": "/malaria-inference-frontend/static/js/453.4c20a088.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4fb3282c.css",
+    "static/css/main.b184ea7b.css",
     "static/js/main.c1b51382.js"
   ]
 }
