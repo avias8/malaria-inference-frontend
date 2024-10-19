@@ -488,7 +488,7 @@ Malaria is a serious health problem in many regions, and early, accurate diagnos
 ### Get in Touch
 
 - **Email:** harshvardhanv98@gmail.com
-- **LinkedIn:** [linkedin.com/in/avishay-barshai](https://www.linkedin.com/in/avivarma/)
+- **LinkedIn:** [linkedin.com/in/avivarma](https://www.linkedin.com/in/avivarma/)
 - **GitHub:** [github.com/avias8](https://github.com/avias8)
 
 I’m always open to collaborations or discussions, especially in healthcare tech and machine learning. Feel free to reach out!
