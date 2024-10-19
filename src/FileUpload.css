@@ -3,9 +3,9 @@
 .file-upload {
     margin: 1rem 0;
     text-align: center;
-}
-
-.image-container {
+  }
+  
+  .image-container {
     width: 400px;
     height: 400px;
     background-color: #000;
@@ -16,17 +16,80 @@
     margin: 0 auto;
     border: 2px solid #ccc;
     border-radius: 10px;
-}
-
-.image-container img {
+  }
+  
+  .image-container img {
     width: 95%;
     height: 95%;
-    object-fit: contain; /* Changed from 'contain' to 'cover' */
-}
-
-
-.file-upload p {
+    object-fit: contain;
+  }
+  
+  .file-upload p {
     font-size: 0.9rem;
     margin-top: 0.5rem;
     color: #555;
-}
+  }
+  
+  /* Toggle Buttons */
+  .toggle-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .toggle-buttons button {
+    padding: 0.75rem 1.5rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.2s;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .toggle-buttons button.active {
+    background-color: #1976d2;
+    color: #fff;
+  }
+  
+  .toggle-buttons button:hover {
+    background-color: #bdbdbd;
+    transform: scale(1.05);
+  }
+  
+  .toggle-buttons button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+  
+  .toggle-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Icon Styling */
+  .icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  /* In Game.css or FileUpload.css */
+
+@media (max-width: 600px) {
+    .image-container {
+      width: 100%;
+      max-width: 300px;
+    }
+  
+    .toggle-buttons {
+      flex-direction: column;
+    }
+  
+    .toggle-buttons button {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+  }

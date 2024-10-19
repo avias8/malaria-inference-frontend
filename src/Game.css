@@ -181,36 +181,6 @@ button:focus {
     display: inline-block;
 }
 
-.error-message {
-    color: red;
-    margin-top: 1rem;
-}
-
-/* API Status Indicator */
-.api-status {
-    padding: 0.5rem 1rem;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.api-status.checking {
-    background-color: #ffeb3b;
-    /* Yellow */
-    color: #000;
-}
-
-.api-status.online {
-    background-color: #4caf50;
-    /* Green */
-    color: #fff;
-}
-
-.api-status.offline {
-    background-color: #f44336;
-    /* Red */
-    color: #fff;
-}
 
 /* Status Orb */
 .status-orb {
@@ -251,4 +221,27 @@ button:focus {
 .status-orb:hover {
     transform: scale(1.1);
     transition: transform 0.2s;
+}
+
+/* Game.css */
+
+.error-message {
+    color: #f44336;
+    background-color: #ffebee;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid #f44336;
+    border-radius: 5px;
+    position: relative;
+}
+
+.error-message button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #f44336;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
