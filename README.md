@@ -1,71 +1,64 @@
-# Getting Started with Create React App
+Great! Here's an updated version based on your current work and background. I've filled in most of the relevant details but left placeholders where I need more specific information from you.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+# Malaria Cell Classification Application
 
-In the project directory, you can run:
+Welcome to the **Malaria Cell Classification Application** repository! This project includes a **React** frontend and a **Flask** backend, containerized using **Docker** and deployed on **Google Cloud Container Instances**. The application uses a pre-trained TensorFlow model to classify blood cell images as **Parasitized** (infected) or **Uninfected**.
 
-### `npm start`
+## Table of Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [Project Overview](#project-overview)
+- [Architecture](#architecture)
+- [Technologies Used](#technologies-used)
+- [Repository Structure](#repository-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Backend Setup](#backend-setup)
+  - [Frontend Setup](#frontend-setup)
+- [Running the Application](#running-the-application)
+  - [Running Locally](#running-locally)
+  - [Using Docker](#using-docker)
+- [Deployment](#deployment)
+  - [Deploying to Google Cloud Container Instances](#deploying-to-google-cloud-container-instances)
+- [API Reference](#api-reference)
+- [Model Details](#model-details)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [About the Author](#about-the-author)
+- [License](#license)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## About the Author
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Hello! I'm **Avi**, a software engineer passionate about solving real-world challenges using technology and machine learning. This application is part of my capstone project for the MIT Applied Data Science and Machine Learning program, where I worked on detecting malaria from blood cell images using deep learning models.
 
-### `npm run build`
+### Background
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Education:**
+  - Mechanical Engineering Major, Computer Science Minor – University of British Columbia
+  - XR/VR Software Development Course – CircuitStream (University of Toronto)
+  - Currently enrolled in MIT’s Professional Education Data Science and Machine Learning Program
+  
+- **Experience:**
+  - I work as a software engineer at CN Rail, primarily with C#, ASP.NET, MVC applications, and machine learning technologies. I’ve also developed and launched a VR game called **Crazy Golf VR** on the Meta App Lab, which now has over 11,000 installs.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Interests:**
+  - Machine Learning, Deep Learning, XR/VR, Software Development, Healthcare Technology
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Motivation
 
-### `npm run eject`
+Malaria is a serious health problem in many regions, and early, accurate diagnosis can save lives. This project aims to bring machine learning into healthcare by making it easier and faster to detect malaria in blood cells using image classification, potentially supporting healthcare workers in resource-constrained settings.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Get in Touch
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Email:** harshvardhanv98@gmail.com
+- **LinkedIn:** [linkedin.com/in/avishay-barshai](https://www.linkedin.com/in/avivarma/)
+- **GitHub:** [github.com/avias8](https://github.com/avias8)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+I’m always open to collaborations or discussions, especially in healthcare tech and machine learning. Feel free to reach out!
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# malaria-inference-frontend
+This version adds more relevant details based on your background and projects. Let me know if you'd like to adjust or clarify anything!
