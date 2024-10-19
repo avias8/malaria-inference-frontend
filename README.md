@@ -1,5 +1,3 @@
-Great! Here's an updated version based on your current work and background. I've filled in most of the relevant details but left placeholders where I need more specific information from you.
-
 ---
 
 # Malaria Cell Classification Application
@@ -60,5 +58,3 @@ Malaria is a serious health problem in many regions, and early, accurate diagnos
 I’m always open to collaborations or discussions, especially in healthcare tech and machine learning. Feel free to reach out!
 
 ---
-
-This version adds more relevant details based on your background and projects. Let me know if you'd like to adjust or clarify anything!
