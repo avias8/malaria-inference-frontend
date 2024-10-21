@@ -1,7 +1,5 @@
 // Game.js
 
-// Game.js
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ClipLoader } from 'react-spinners';
 import FileUpload from './FileUpload';
@@ -148,6 +146,9 @@ const Game = () => {
         }
       }
 
+      // Convert confidence to percentage and ensure it's multiplied by 100
+      const confidencePercentage = (data.confidence * 100).toFixed(2);
+
       // Create a new result entry
       const newResult = {
         key: totalGuesses, // Unique key
@@ -156,7 +157,7 @@ const Game = () => {
         correctLabel: correctLabel, // The actual label
         userGuess: guess,
         modelPrediction: data.prediction,
-        confidence: data.confidence,
+        confidence: confidencePercentage, // Use percentage format
       };
 
       // Update the gameResults array
@@ -173,6 +174,7 @@ const Game = () => {
       }
     }
   };
+
 
   // Effect to make predictions when an image is uploaded and useRandomImage is false
   useEffect(() => {
@@ -230,11 +232,13 @@ const Game = () => {
         useRandomImage={useRandomImage}
         setUseRandomImage={setUseRandomImage}
       />
-
+      <div className="guess-label">
+        <h2>Make Your Guess</h2>
+      </div>
       {/* Show guess buttons only if an image is selected and useRandomImage is true */}
       {imageData && useRandomImage && (
         <div className="guess-buttons">
-          <h3>Make Your Guess</h3>
+          <br></br>
           <button
             onClick={() => handleGameSubmit('Parasitized')}
             disabled={loading || apiStatus !== 'online'}
@@ -278,15 +282,16 @@ const Game = () => {
                   className="confidence"
                   style={{
                     color:
-                      result.confidence > 80
+                      (result.confidence * 100) > 80
                         ? 'green'
-                        : result.confidence > 50
-                        ? 'orange'
-                        : 'red',
+                        : (result.confidence * 100) > 50
+                          ? 'orange'
+                          : 'red',
                   }}
                 >
-                  Confidence: {result.confidence}%
+                  Confidence: {(result.confidence * 100).toFixed(2)}%
                 </span>
+
               </div>
             ))}
           </div>
@@ -311,12 +316,8 @@ const Game = () => {
                   <div key={entry.key} className="result-entry">
                     {/* User's result */}
                     <span
-                      className={`emoji ${
-                        !entry.userCorrect ? 'shake' : ''
-                      }`}
-                      aria-label={
-                        entry.userCorrect ? 'Correct' : 'Incorrect'
-                      }
+                      className={`emoji ${!entry.userCorrect ? 'shake' : ''}`}
+                      aria-label={entry.userCorrect ? 'Correct' : 'Incorrect'}
                     >
                       {entry.userCorrect ? '✅' : '😲'}
                     </span>
@@ -327,27 +328,34 @@ const Game = () => {
 
                     {/* Model's result */}
                     <span
-                      className={`emoji ${
-                        !entry.modelCorrect ? 'shake' : ''
-                      }`}
-                      aria-label={
-                        entry.modelCorrect ? 'Correct' : 'Incorrect'
-                      }
+                      className={`emoji ${!entry.modelCorrect ? 'shake' : ''}`}
+                      aria-label={entry.modelCorrect ? 'Correct' : 'Incorrect'}
                     >
                       {entry.modelCorrect ? '✅' : '😲'}
                     </span>
                     <span className="label">Model</span>
-                    <span className="guess">
-                      ({entry.modelPrediction})
-                    </span>
+                    <span className="guess">({entry.modelPrediction})</span>
 
-                    <span className="confidence">
-                      Confidence: {entry.confidence}
+                    {/* Confidence with color based on value */}
+                    <span
+                      className="confidence"
+                      style={{
+                        color:
+                          (entry.confidence * 100) > 80
+                            ? 'green'
+                            : (entry.confidence * 100) > 50
+                              ? 'orange'
+                              : 'red',
+                      }}
+                    >
+                      Confidence: {(entry.confidence)} {/* Added percentage symbol */}
                     </span>
                   </div>
                 ))}
             </div>
           </div>
+
+
 
           {/* Display the scoreboard */}
           <div className="scoreboard">
